@@ -1,0 +1,149 @@
+﻿<Window x:Class="Gluon.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Gluon"
+        xmlns:avalon="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Black"
+        ResizeMode="CanResizeWithGrip"
+        BorderThickness="1"
+        BorderBrush="#2F2F2F"
+        >
+        
+    <Window.Resources>
+        <Style x:Key="BottomButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#111111"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1F1F1F"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#040404"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="TopButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+        
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                        
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                              VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                        
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#1F1F1F"/>
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#040404"/>
+                            </Trigger>
+                        
+                        </ControlTemplate.Triggers>
+                        
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid>
+        <DockPanel>
+            
+            <Grid DockPanel.Dock="Top" FlowDirection="LeftToRight" Background="#080808" x:Name="TopPanel" MouseLeftButtonDown="TopPanel_OnMouseLeftButtonDown">
+                
+                <StackPanel Orientation="Horizontal" Height="16px">
+                    <Viewbox StretchDirection="DownOnly" Margin="5 0 0 0">
+                        <Viewbox.LayoutTransform>
+                            <ScaleTransform ScaleX="4" ScaleY="4"></ScaleTransform>
+                        </Viewbox.LayoutTransform>
+                        <Grid>
+                            <Polygon Points="0, 2, 1, 0, 2, 2" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center"></Polygon>
+                        </Grid>
+                    </Viewbox>
+                    <Viewbox Margin="5 0 0 0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Gluon" Foreground="White"></TextBlock>
+                            <TextBlock Text="beta" Foreground="DimGray" Margin="5 0 0 0"></TextBlock>
+                        </StackPanel>
+                    </Viewbox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Width="20" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"  Background="Transparent" x:Name="CloseButton" Style="{StaticResource TopButtonStyle}" Click="CloseButton_OnClick">
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock Text="X" Foreground="White"></TextBlock>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Button Width="20" Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"  Background="Transparent" x:Name="CollapseButton" Style="{StaticResource TopButtonStyle}" Click="CollapseButton_OnClick" >
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock Text="-" Foreground="White"></TextBlock>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
+            <Grid DockPanel.Dock="Bottom" x:Name="BottomButtons" Height="30" Margin="8">
+                <StackPanel Orientation="Horizontal" FlowDirection="RightToLeft">
+                    <Button Width="65"  Background="Transparent" BorderThickness="0" Style="{StaticResource BottomButtonStyle}" x:Name="ExecuteButton" Click="ExecuteButton_OnClick">
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock Text="Execute" Foreground="White" Padding="8"></TextBlock>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                    <Button Width="65"  Background="Transparent" BorderThickness="0" Style="{StaticResource BottomButtonStyle}" x:Name="AttachButton" Click="AttachButton_OnClick">
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock Text="Attach" Foreground="White" Padding="8"></TextBlock>
+                            </Viewbox>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            
+            <Grid x:Name="BodyContent" Margin="8">
+                <avalon:TextEditor x:Name="CodeEditor"
+                                   ShowLineNumbers="True"
+                                   FontSize="12pt"
+                                   Background="#080808" 
+                                   Foreground="#D4D4D4"
+                                   LineNumbersForeground="#FFFFFF"
+                                   HorizontalScrollBarVisibility="Disabled"
+                                   VerticalScrollBarVisibility="Hidden"
+                                   />
+            </Grid>
+
+        </DockPanel>
+        
+        
+    </Grid>
+</Window>
